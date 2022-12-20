@@ -10,69 +10,69 @@ CREATE TYPE "transactionsType" AS ENUM (
 
 CREATE TABLE "customers" (
   "id" SERIAL PRIMARY KEY,
-  "fullName" varchar[100],
-  "cpf" varchar[11] UNIQUE,
-  "email" varchar[100] UNIQUE,
-  "password" text
+  "fullName" varchar[100] NOT NULL,
+  "cpf" varchar[11] NOT NULL UNIQUE,
+  "email" varchar[100] NOT NULL UNIQUE,
+  "password" text NOT NULL
 );
 
 CREATE TABLE "customerPhones" (
   "id" SERIAL PRIMARY KEY,
-  "customerId" integer,
-  "number" varchar[19],
-  "type" phoneTypes
+  "customerId" integer NOT NULL,
+  "number" varchar[19] NOT NULL,
+  "type" phoneTypes NOT NULL
 );
 
 CREATE TABLE "customerAddresses" (
   "id" SERIAL PRIMARY KEY,
-  "customerId" integer UNIQUE,
-  "street" varchar[30],
-  "number" varchar[10],
-  "complement" varchar[100],
-  "postalCode" varchar[10],
-  "cityId" integer
+  "customerId" integer NOT NULL UNIQUE,
+  "street" varchar[30] NOT NULL,
+  "number" varchar[10] NOT NULL,
+  "complement" varchar[100] NOT NULL,
+  "postalCode" varchar[10] NOT NULL,
+  "cityId" integer NOT NULL
 );
 
 CREATE TABLE "cities" (
   "id" SERIAL PRIMARY KEY,
-  "name" varchar[20],
-  "stateId" integer
+  "name" varchar[20] NOT NULL,
+  "stateId" integer NOT NULL
 );
 
 CREATE TABLE "states" (
   "id" SERIAL PRIMARY KEY,
-  "name" varchar[20] UNIQUE
+  "name" varchar[20] NOT NULL UNIQUE
 );
 
 CREATE TABLE "backAccount" (
   "id" SERIAL PRIMARY KEY,
-  "customerId" integer,
-  "accountNumber" varchar[10],
-  "agency" varchar[10],
-  "openDate" date,
-  "closeDate" date
+  "customerId" integer NOT NULL,
+  "accountNumber" varchar[10] NOT NULL,
+  "agency" varchar[10] NOT NULL,
+  "openDate" date NOT NULL,
+  "closeDate" date NOT NULL
 );
 
 CREATE TABLE "transactions" (
   "id" SERIAL PRIMARY KEY,
-  "bankAccountId" integer,
-  "amount" integer,
-  "type" transactionsType,
-  "time" timestamptz,
-  "description" varchar[30],
-  "cancelled" boolean
+  "bankAccountId" integer NOT NULL,
+  "amount" integer NOT NULL,
+  "type" transactionsType NOT NULL,
+  "time" timestamptz NOT NULL,
+  "description" varchar[30] NOT NULL,
+  "cancelled" boolean NOT NULL
 );
 
 CREATE TABLE "creditCards" (
   "id" SERIAL PRIMARY KEY,
-  "bankAccountId" integer,
-  "name" varchar[20],
-  "number" text,
-  "securityCode" text,
-  "expirationMonth" integer,
-  "expirationYear" integer,
-  "password" text,
-  "limit" integer
+  "bankAccountId" integer NOT NULL,
+  "name" varchar[20] NOT NULL,
+  "number" text NOT NULL,
+  "securityCode" text NOT NULL,
+  "expirationMonth" integer NOT NULL,
+  "expirationYear" integer NOT NULL,
+  "password" text NOT NULL,
+  "limit" integer NOT NULL
 );
 
 ALTER TABLE "customerPhones" ADD FOREIGN KEY ("customerId") REFERENCES "customers" ("id");
